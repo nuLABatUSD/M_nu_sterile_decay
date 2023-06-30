@@ -118,11 +118,49 @@ def everything2(e_array,f_array):
     
     plt.figure()
     plt.semilogy(e_array,e_array**2*f_array,color="black")
-    plt.semilogy(e_array,N_best*(e_array**2)/(np.exp(e_array/T_best)+1)+e**2*np.exp(poly),color="green")
+    plt.semilogy(e_array,N_best*(e_array**2)/(np.exp(e_array/T_best)+1)+e_array**2*np.exp(poly),linestyle='--')
     plt.show()
     
     return A_best,B_best,C_best,T_best,N_best
     
+
+
+def everything_poly(e_array,f_array,poly_degree):
+    diff_still_reverse,T_best,N_best = everything1(e_array,f_array)
+    
+    diff_smaller_reverse = []
+    for i in diff_still_reverse: 
+        if i < 0:
+            break
+        if i > 0:
+            diff_smaller_reverse.append(i)
+    diff_smaller_correct = diff_smaller_reverse[::-1]
+    E_new = e_array[len(e_array)-len(diff_smaller_correct):]
+    F_new = f_array[len(e_array)-len(diff_smaller_correct):]
+    
+    
+    np.polyfit(E_new,np.log(diff_smaller_correct),poly_degree) 
+    coefficients = np.polyfit(E_new,np.log(diff_smaller_correct),poly_degree) 
+    polynomial = np.poly1d(coefficients)
+    
+    plt.figure()
+    plt.semilogy(e_array,e_array**2*f_array,color="black")
+    plt.semilogy(e_array,N_best*(e_array**2)/(np.exp(e_array/T_best)+1)+e_array**2*np.exp(polynomial(e_array)),linestyle='--')
+    plt.show()
+    
+    return T_best,N_best,coefficients
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
