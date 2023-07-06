@@ -146,43 +146,12 @@ def cdf_array(e_array,f_array):
     return e_array_shorter,f_array_shorter
 
 
-
-
-def everything_poly_cdf(e_array,f_array,poly_degree):
-    diff_still_reverse,T_best,N_best = everything1(e_array,f_array)
+def finale(e_array,f_array,poly_degree):
+    e,f = cdf_array(e_array,f_array)
     
-    diff_smaller_reverse = []
-    for i in diff_still_reverse: 
-        if i < 0:
-            break
-        if i > 0:
-            diff_smaller_reverse.append(i)
-    diff_smaller_correct = diff_smaller_reverse[::-1]
-    E_new = e_array[len(e_array)-len(diff_smaller_correct):]
-    F_new = f_array[len(e_array)-len(diff_smaller_correct):]
+    T,N,poly_coefficients,integral_test = everything_poly(e,f,poly_degree)
     
-    
-    np.polyfit(E_new,np.log(diff_smaller_correct),poly_degree) 
-    coefficients = np.polyfit(E_new,np.log(diff_smaller_correct),poly_degree) 
-    polynomial = np.poly1d(coefficients)
-    
-    cdf = cdf_faster(e_array,f_array)
-    high = np.where(cdf_faster(e_array,f_array)>0.9999)[0][0]
-    
-    k = len(e_array)-high
-    e_array_shorter = np.delete(e_array,np.s_[-k:])
-    f_array_shorter = np.delete(f_array,np.s_[-k:])
-    
-    int_test = np.trapz(e_array_shorter**2*f_array_shorter) - np.trapz(N_best*(e_array_shorter**2)/(np.exp(e_array_shorter/T_best)+1)+e_array_shorter**2*np.exp(polynomial(e_array_shorter)))
-
-    
-    plt.figure()
-    plt.semilogy(e_array_shorter,e_array_shorter**2*f_array_shorter,color="black")
-    plt.semilogy(e_array_shorter,N_best*(e_array_shorter**2)/(np.exp(e_array_shorter/T_best)+1)+e_array_shorter**2*np.exp(polynomial(e_array_shorter)),linestyle='--')
-    plt.show()
-    
-    return T_best,N_best,coefficients,int_test
-
+    return T,N,poly_coefficients,integral_test
 
 
 
