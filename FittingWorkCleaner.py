@@ -93,7 +93,7 @@ def everything1(e_array,f_array):
 
 
     
-def everything_poly(e_array,f_array,poly_degree):
+def everything_poly(e_array,f_array,poly_degree,plot):
     diff_still_reverse,T_best,N_best = everything1(e_array,f_array)
     
     diff_smaller_reverse = []
@@ -111,18 +111,15 @@ def everything_poly(e_array,f_array,poly_degree):
     coefficients = np.polyfit(E_new,np.log(diff_smaller_correct),poly_degree) 
     polynomial = np.poly1d(coefficients)
     
-    
-    int_test = np.trapz(e_array**2*f_array) - np.trapz(N_best*(e_array**2)/(np.exp(e_array/T_best)+1)+e_array**2*np.exp(polynomial(e_array)))
-    
-    
-    plt.figure()
-    plt.semilogy(e_array,e_array**2*f_array,color="black")
-    plt.semilogy(e_array,N_best*(e_array**2)/(np.exp(e_array/T_best)+1)+e_array**2*np.exp(polynomial(e_array)),linestyle='--')
-    plt.show()
-    
-    return T_best,N_best,coefficients, int_test 
+    if plot:
+        plt.figure()
+        plt.semilogy(e_array,e_array**2*f_array,color="black")
+        plt.semilogy(e_array,N_best*(e_array**2)/(np.exp(e_array/T_best)+1)+e_array**2*np.exp(polynomial(e_array)),linestyle='--')
+        plt.show()
+        return T_best,N_best,coefficients
+    else:
+        return T_best,N_best,coefficients
 
-@nb.jit(nopython=True)
 def cdf_faster(e,f):
     r = np.zeros(len(e))
     
@@ -135,7 +132,6 @@ def cdf_faster(e,f):
     
     return r
 
-
 def cdf_array(e_array,f_array):
     high = np.where(cdf_faster(e_array,f_array)>0.9999)[0][0]
     
@@ -146,12 +142,12 @@ def cdf_array(e_array,f_array):
     return e_array_shorter,f_array_shorter
 
 
-def finale(e_array,f_array,poly_degree):
+def finale(e_array,f_array,poly_degree,plot):
     e,f = cdf_array(e_array,f_array)
     
-    T,N,poly_coefficients,integral_test = everything_poly(e,f,poly_degree)
+    T,N,poly_coefficients = everything_poly(e,f,poly_degree,plot)
     
-    return T,N,poly_coefficients,integral_test
+    return T,N,poly_coefficients
 
 
 
