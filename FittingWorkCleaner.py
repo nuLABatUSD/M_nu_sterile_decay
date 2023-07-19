@@ -150,8 +150,10 @@ def finale(e_array,f_array,poly_degree,plot):
     return T,N,poly_coefficients
 
 
-
-
+def finale_no_cdf(e_array,f_array,poly_degree,plot):
+    T,N,poly_coefficients = everything_poly(e_array,f_array,poly_degree,plot)
+    
+    return T,N,poly_coefficients
 
 
 
