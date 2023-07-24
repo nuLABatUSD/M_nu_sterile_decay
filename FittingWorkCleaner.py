@@ -133,7 +133,7 @@ def cdf_faster(e,f):
     return r
 
 def cdf_array(e_array,f_array):
-    high = np.where(cdf_faster(e_array,f_array)>0.9999)[0][0]
+    high = np.where(cdf_faster(e_array,e_array**2*f_array)>1-10**-4)[0][0]
     
     k = len(e_array)-high
     e_array_shorter = np.delete(e_array,np.s_[-k:])
