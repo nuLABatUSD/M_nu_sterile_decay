@@ -141,6 +141,16 @@ def cdf_array(e_array,f_array):
     
     return e_array_shorter,f_array_shorter
 
+def cdf_array_test(e_array,f_array):
+    high = np.where(cdf_faster(e_array,f_array)>0.9999)[0][0]
+    
+    k = len(e_array)-high
+    e_array_shorter = np.delete(e_array,np.s_[-k:])
+    f_array_shorter = np.delete(f_array,np.s_[-k:])
+    
+    return e_array_shorter,f_array_shorter
+
+
 
 def finale(e_array,f_array,poly_degree,plot):
     e,f = cdf_array(e_array,f_array)
@@ -148,6 +158,16 @@ def finale(e_array,f_array,poly_degree,plot):
     T,N,poly_coefficients = everything_poly(e,f,poly_degree,plot)
     
     return T,N,poly_coefficients
+
+def finale_test(e_array,f_array,poly_degree,plot):
+    e,f = cdf_array_test(e_array,f_array)
+    
+    T,N,poly_coefficients = everything_poly(e,f,poly_degree,plot)
+    
+    return T,N,poly_coefficients
+
+
+
 
 
 def finale_no_cdf(e_array,f_array,poly_degree,plot):
