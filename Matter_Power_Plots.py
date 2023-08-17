@@ -33,13 +33,9 @@ def v_masses_nontherm_alpha(m_small, normal,filename,plot,file,Pk_graphs):
     
     T_best,N_best,coefficients = FWC.finale(e_array,f_array,poly_degree,plot)
     
-    if coefficients[0]>0:
-        A = 0 
-        
-    else:
-        A = coefficients[0]
     
-    params = '{},{},{},{},{},{},{}'.format(T_best/alpha,N_best,A*alpha**4,coefficients[1]*alpha**3,coefficients[2]*alpha**2,coefficients[3]*alpha,coefficients[4])
+    
+    params = '{},{},{},{},{},{},{}'.format(T_best/alpha,N_best,coefficients[0]*alpha**4,coefficients[1]*alpha**3,coefficients[2]*alpha**2,coefficients[3]*alpha,coefficients[4])
     
     af = actual_data['scalefactors'][-1]
     tf = actual_data['temp'][-1]
@@ -290,6 +286,7 @@ def make_graphs(file1,file2,file3,file4,file5,file6):
     plt.semilogx(k_array_m5,Pkn_array_m5/L_array_m5-1,linestyle='--',color="purple")
     plt.semilogx(k_array_m6,Pkn_array_m6/L_array_m6-1,linestyle='--',color="blue")
     plt.ylabel(r'$P(k)^\nu/P(k)-1$')
+    plt.xlabel(r'$k \,\,\,\, [h/\mathrm{Mpc}]$')
     plt.show()
     
 
