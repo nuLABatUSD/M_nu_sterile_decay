@@ -109,6 +109,10 @@ def everything_poly(e_array,f_array,poly_degree,plot):
     
     np.polyfit(E_new,np.log(diff_smaller_correct),poly_degree) 
     coefficients = np.polyfit(E_new,np.log(diff_smaller_correct),poly_degree) 
+    
+    if coefficients[0]>0:
+        coefficients[0] = 0 
+    
     polynomial = np.poly1d(coefficients)
     
     if plot:
