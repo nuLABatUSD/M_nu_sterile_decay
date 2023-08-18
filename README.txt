@@ -5,3 +5,5 @@ Out of all the functions that are in the .py, the first one that needs to be ran
 The next function that needs to be ran is make_graphs which generates the deltaP/P plots. This function takes the name of the 6 files entered in the previous function. Mass file is NOT an input
 
 To get diagnostics (Neff for example) other functions must be run. Those are either going to be v_masses_nontherm_alpha or v_masses_therm depending on what you are trying to do. Very detailed notes about these functions and their inputs are located in the .py. 
+
+Current plots as of 8/17 can be found in Potential_Fix.ipynb
