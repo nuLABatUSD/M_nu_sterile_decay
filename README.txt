@@ -1,0 +1,1 @@
+Matter_Power_Plots.py contains all the functions necessary to generating the delaP/P plots. All functions in the .py have notes on how to use them and what exactly they do. The same functions are also found in Matter_Power_Plots.ipynb where they can be run to see how the diagnostics are looking (Neff for example).
